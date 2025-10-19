@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stroke Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+  <div class="container dashboard-container">
+    <h1 class="mb-4 text-primary fw-bold">Brain Stroke Dashboard</h1>
+
+    <div class="dashboard-grid">
+      <!-- Prediction Tile -->
+      <div class="dashboard-card" onclick="location.href='/form'">
+        <h5>Stroke Prediction</h5>
+        <p class="mt-2">Enter patient attributes and get a risk probability. Ask the internet for precautions.</p>
+      </div>
+
+      <!-- Statistics Tile -->
+      <div class="dashboard-card" onclick="location.href='/statistics'">
+        <h5>Stroke Statistics</h5>
+        <p class="mt-2">Interactive charts showing attribute vs stroke statistics.</p>
+      </div>
+    </div>
+
+    <!-- Fact Tile -->
+    <div class="fact-card mt-4 p-4 d-flex justify-content-between align-items-center">
+      <div>
+        <h6 class="mb-1 fw-semibold">Health Fact</h6>
+        <p id="fact-text" class="mb-0">Loading fact...</p>
+      </div>
+      <button id="refresh-fact" class="btn btn-outline-primary">Refresh</button>
+    </div>
+  </div>
+
+  <script>
+    async function loadFact() {
+      const factText = document.getElementById('fact-text');
+      factText.innerText = "Fetching fact...";
+      try {
+        const res = await fetch('/get_fact');
+        const j = await res.json();
+        factText.innerText = j.fact || "No fact available.";
+      } catch {
+        factText.innerText = "Unable to fetch fact.";
+      }
+    }
+    document.getElementById('refresh-fact').addEventListener('click', loadFact);
+    loadFact();
+  </script>
+</body>
+</html>
