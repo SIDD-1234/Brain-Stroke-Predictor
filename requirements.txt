@@ -1,0 +1,15 @@
+# Web framework
+Flask==3.0.3
+
+# Data manipulation
+pandas==2.2.3
+numpy==1.26.4
+
+# Machine learning
+scikit-learn==1.5.2
+
+# HTTP requests for Ollama API
+requests==2.32.3
+
+# For pickled model loading
+joblib==1.4.2
